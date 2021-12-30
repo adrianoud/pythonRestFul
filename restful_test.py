@@ -7,14 +7,18 @@ app = Flask(__name__)
 api = Api(app)
 
 parser = reqparse.RequestParser()
-parser.add_argument('a', location='json')
-parser.add_argument('b', location='json')
+parser.add_argument('a')
+parser.add_argument('testkey', type=dict)     # !!! type dict 不能带引号
+# parser.add_argument('b')
+# parser.add_argument('c')
 
 
 class Caculator_Add(Resource):
     def post(self):
         args = parser.parse_args()
-        return int(args['a'])+int(args['b'])
+        print(args)
+        # return
+        return int(args['a']) + int(args['testkey']['b'])    # 字典取值后面没有点！！
 
 
 api.add_resource(Caculator_Add, '/add')
